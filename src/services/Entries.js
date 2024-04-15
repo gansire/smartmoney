@@ -6,7 +6,7 @@ import uuid from '../../node_modules/uuid/dist/v4';
 
 export const getEntries = async () => {
     const realm = await getRealm();
-    const entries = realm.objects('Entry');
+    const entries = realm.objects('Entry').toJSON();
 
     console.log(JSON.stringify(entries));
     return entries
@@ -17,14 +17,11 @@ export const saveEntry = async (value, entry = {}) => {
     let myuuid = uuid();
     try {
         realm.write(() =>{
-            date = {
+            data = {
                 id: value.id || entry.id || myuuid,
                 amount: value.amount || entry.amount,
-                description: value.description || entry.description,
-                address: value.address || entry.address,
-                photo: value.photo || entry.photo,
                 entryAt: value.entryAt || entry.entryAt,
-                isInit:  false,
+                isInit: false,
             };
             realm.create("Entry", date, true);
         });
