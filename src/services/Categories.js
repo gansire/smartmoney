@@ -1,5 +1,3 @@
-
-import React from 'react'
 import uuid from '../../node_modules/uuid/dist/v4';
 import { getRealm } from './Realm';
 

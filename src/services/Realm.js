@@ -25,14 +25,13 @@ export const initDb = realm => {
     const categories = getDefaultCategories();
 
     console.log(`initDB :: Initing db...`);
-
+    let contador = 0;
     try {
       realm.write(() => {
         categories.forEach(category => {
           console.log(
             `initDB :: creating category: ${JSON.stringify(category)}`,
           );
-
           realm.create('Category', category, true);
         });
       });
