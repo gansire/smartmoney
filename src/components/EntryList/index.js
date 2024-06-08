@@ -5,12 +5,12 @@ import EntryListItem from './EntryListItem/index';
 import { getEntries } from '../../services/Entries';
 import Container from '../Core/Container/index';
 
-const EntryList = ({onEntryPress, onPressActionButton}) => {
+const EntryList = ({days = 7, onEntryPress, onPressActionButton}) => {
   const [entries, setEntries] = useState([])
 
   useEffect(() => {
     async function loadEntries (){
-      const data =  await getEntries();
+      const data =  await getEntries(days);
       setEntries(data)
     }
 
@@ -22,7 +22,7 @@ const EntryList = ({onEntryPress, onPressActionButton}) => {
   return (
     <Container 
       title="Últimos Lançamentos"
-      actionLabelText="Últimos 7 dias"
+      actionLabelText= {`Últimos ${days} dias`}
       actionButtonText="Ver Mais"
       onPressActionButton={onPressActionButton}
     >

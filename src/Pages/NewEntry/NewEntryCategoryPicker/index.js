@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, TouchableOpacity, Modal, FlatList, View, StyleSheet } from 'react-native';
 import { getDebitCategories, getCreditCategories } from '../../../services/Categories';
 import Colors from '../../../styles/Colors';
+import ActionFooter, {ActionPrimaryButton, ActionSecondaryButton} from '../../../components/Core/ActionFooter/index';
 
 const NewEntryCategoryPicker = ({debit, category, onChangeCategory}) => {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -56,16 +57,11 @@ const NewEntryCategoryPicker = ({debit, category, onChangeCategory}) => {
 							</TouchableOpacity>
 						)}
 					/>
-					<TouchableOpacity 
-						style={styles.closeButton}
-						onPress={onClosePress}
-					>
-						<Text style={styles.closeButtonText}>
-							Fechar
-						</Text>
-					</TouchableOpacity>
+					
 				</View>
-
+				<ActionFooter>
+					<ActionPrimaryButton title="Fechar" onPress={onClosePress}/>
+				</ActionFooter>
 			</Modal>
 		</View>
 	)
@@ -98,22 +94,6 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		color: Colors.white,
 		textAlign: 'center'
-	},
-	closeButton:{
-		alignSelf: 'center',
-		backgroundColor: Colors.background,
-		borderColor: Colors.green,
-		borderWidth: 2,
-		borderRadius: 15,
-		marginVertical: 10,
-		marginHorizontal: 20,
-		paddingVertical: 3,
-		paddingHorizontal: 5
-	},
-	closeButtonText:{
-		color: Colors.green,
-		fontSize: 14,
-		textAlign: 'center',
 	}
 })
 export default NewEntryCategoryPicker
