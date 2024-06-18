@@ -5,19 +5,19 @@ import EntryListItem from './EntryListItem/index';
 import { getEntries } from '../../services/Entries';
 import Container from '../Core/Container/index';
 
-const EntryList = ({days = 7, onEntryPress, onPressActionButton}) => {
+const EntryList = ({days = 7, category,  onEntryPress, onPressActionButton}) => {
   const [entries, setEntries] = useState([])
 
   useEffect(() => {
     async function loadEntries (){
-      const data =  await getEntries(days);
+      const data =  await getEntries(days, category);
       setEntries(data)
     }
 
     loadEntries()
 
     console.log('EntryList :: useEffect');
-  }, [days])
+  }, [days, category])
 
   return (
     <Container 

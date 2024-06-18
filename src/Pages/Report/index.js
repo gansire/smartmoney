@@ -8,24 +8,36 @@ import Colors from '../../styles/Colors';
 import ActionFooter, {ActionPrimaryButton} from '../../components/Core/ActionFooter/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import RelativeDaysModal from '../../components/RelativeDaysModal/index';
+import CategoryModal from '../../components/CategoryModal/index';
 
 const Report = ({navigation}) => {
   const [relativeDaysModalVisible, setRelativeDaysModalVisible] = useState(false);
   const [relativeDays, setRelativeDays] = useState(7);
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [category, setCategory] = useState({id: null, name: 'Todas Categorias'});
 
   const onRelativeDaysPress = item => {
     setRelativeDays(item);
     onRelativeDaysClosePress();
   }
 
+  const onCategoryPress = item => {
+    setCategory(item);
+    onCategoryClosePress();
+  }
+
   const onRelativeDaysClosePress = () => {
     setRelativeDaysModalVisible(false)
+  }
+
+  const onCategoryClosePress = () => {
+    setCategoryModalVisible(false)
   }
 
   return (
     <View style={styles.container}>
       <BalanceLabel/>
-      <View>
+      <View style={styles.filterContainer}>
         <TouchableOpacity 
           style={styles.filterButton} 
           onPress={() => {
@@ -33,7 +45,7 @@ const Report = ({navigation}) => {
           }}
         >
           <Text style={styles.filterButtonText}>
-            Últimos 7 dias
+            {`Últimos ${relativeDays} dias`}
           </Text>
           <Icon 
             name="keyboard-arrow-down"
@@ -42,10 +54,26 @@ const Report = ({navigation}) => {
           />
         </TouchableOpacity>
         <RelativeDaysModal isVisible={relativeDaysModalVisible} onConfirm={onRelativeDaysPress} onCancel={onRelativeDaysClosePress}/>
+        <TouchableOpacity 
+          style={styles.filterButton} 
+          onPress={() => {
+            setCategoryModalVisible(true)
+          }}
+        >
+          <Text style={styles.filterButtonText}>
+            {category.name}
+          </Text>
+          <Icon 
+            name="keyboard-arrow-down"
+            size={20}
+            color={Colors.champagneDark}
+          />
+        </TouchableOpacity>
+        <CategoryModal categoryType="all" isVisible={categoryModalVisible} onConfirm={onCategoryPress} onCancel={onCategoryClosePress}/>
       </View>
       <ScrollView>
         <EntrySummary />
-        <EntryList days={relativeDays} />
+        <EntryList days={relativeDays} category={category}/>
       </ScrollView>
       
       <ActionFooter>
@@ -63,6 +91,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  filterContainer:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 5
   },
   filterButton:{
     flexDirection: 'row',
