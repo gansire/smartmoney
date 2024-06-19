@@ -1,14 +1,13 @@
 import React, {useState} from 'react'
 import { StyleSheet, View } from 'react-native'
-import { saveEntry } from '../../services/Entries'
 import BalanceLabel from '../../components/BalanceLabel/index'
-import { deleteEntry } from '../../services/Entries';
 import Colors from '../../styles/Colors';
 import NewEntryDatePicker from './NewEntryDatePicker/index';
 import NewEntryInput from './NewEntryInput/index';
 import NewEntryCategoryPicker from './NewEntryCategoryPicker/index';
 import NewEntryDeleteAction from './NewEntryDeleteAction/index';
 import ActionFooter, {ActionPrimaryButton, ActionSecondaryButton} from '../../components/Core/ActionFooter/index';
+import { useEntries } from '../../hooks/useEntries';
 
 const NewEntry = ({navigation}) => {  
   const entry = navigation.getParam('entry', {
@@ -23,6 +22,8 @@ const NewEntry = ({navigation}) => {
       name: 'Selecione'
     }
   });
+
+  const [, saveEntry, deleteEntry] = useEntries()
 
   const [debit, setDebit] =  useState(entry.amount <= 0 );
   const [amount, setAmount] =  useState(entry.amount);
