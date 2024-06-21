@@ -8,7 +8,7 @@ import {getDefaultCategories} from './Categories';
 export const getRealm = async () => {
   const realm = await Realm.open({
     schema: [CategorySchema, EntrySchema],
-    schemaVersion: 12,
+    schemaVersion: 13,
   });
 
   // dropDB(realm);
@@ -25,14 +25,13 @@ export const initDb = realm => {
     const categories = getDefaultCategories();
 
     console.log(`initDB :: Initing db...`);
-    let contador = 0;
     try {
       realm.write(() => {
         categories.forEach(category => {
           console.log(
             `initDB :: creating category: ${JSON.stringify(category)}`,
           );
-          realm.create('Category', category, true);
+          realm.create('Category', category);
         });
       });
     } catch (error) {

@@ -1,8 +1,8 @@
 import {Alert} from 'react-native';
 
 import { getRealm } from "./Realm";
-import 'react-native-get-random-values'
-import uuid from '../../node_modules/uuid/dist/v4';
+import 'react-native-get-random-values';
+import { getUUID } from './UUID';
 import moment from '../vendors/moment';
 
 export const getEntries = async (days, category) => {
@@ -28,28 +28,27 @@ export const getEntries = async (days, category) => {
 }
 export const saveEntry = async (value, entry = {}) => {
     const realm = await getRealm();
-    let date = {};
-    let myuuid = uuid();
+    let data = {};
 
     try {
         realm.write(() =>{
             data = {
-                id: value.id || entry.id || myuuid,
+                id: value.id || entry.id || getUUID(),
                 amount: value.amount || entry.amount,
                 entryAt: value.entryAt || entry.entryAt,
                 description: value.category.name,
                 isInit: false,
                 category:value.category || entry.category,
             };
-            realm.create("Entry", date, true);
+            realm.create("Entry", data);
         });
         
-        console.log("saveEntry :: data", JSON.stringify(date) );
+        console.log("saveEntry :: data", JSON.stringify(data) );
     } catch (error) {
-        console.log("saveEntry :: error on save object:", JSON.stringify(date));
+        console.log("saveEntry :: error on save object:",error);
         Alert.alert("Erro ao salvar os dados de lançamento.")
     }
-    return date
+    return data
 };
 
 export const deleteEntry = async (entry) => {
