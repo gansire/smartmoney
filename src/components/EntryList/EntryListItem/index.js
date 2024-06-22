@@ -1,33 +1,35 @@
-import React from 'react'
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import Svg, { Circle, Rect } from 'react-native-svg';
+import React from 'react';
+import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+
+import Svg, {Circle, Rect} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Colors from '../../../styles/Colors';
 
-const EntryListItem = ({ entry, isFirstItem, isLastItem, onEntryPress }) => {
+const EntryListItem = ({entry, isFirstItem, isLastItem, onEntryPress}) => {
   const bulletLineY = isFirstItem ? 25 : 0;
   const bulletLineHeight = isLastItem ? 25 : 50;
   const showBulletLine = !(isFirstItem && isLastItem);
-  const bulletColor = Colors.white;
+  const bulletColor = entry.category.color || Colors.white;
 
   return (
-    <TouchableOpacity onPress={() => { 
-      onEntryPress && onEntryPress(entry)
-    }}>
+    <TouchableOpacity
+      onPress={() => {
+        onEntryPress && onEntryPress(entry);
+      }}>
       <View style={styles.container}>
         <View style={styles.bullet}>
           <Svg height="50" width="30">
-            {
-              showBulletLine && (
-                <Rect
-                  x="9"
-                  y={bulletLineY}
-                  width="1.5"
-                  height={bulletLineHeight}
-                  fill={Colors.background}
-                />
-              )
-            }
+            {showBulletLine && (
+              <Rect
+                x="9"
+                y={bulletLineY}
+                width="1.5"
+                height={bulletLineHeight}
+                fill={Colors.background}
+              />
+            )}
+
             <Circle
               cx="10"
               cy="25"
@@ -44,15 +46,12 @@ const EntryListItem = ({ entry, isFirstItem, isLastItem, onEntryPress }) => {
 
           <View style={styles.details}>
             <Icon style={styles.entryAtIcon} name="access-time" size={12} />
-            <Text style={styles.entryAtText}>
-              {entry.entryAt.toString()}
-            </Text>
+            <Text style={styles.entryAtText}>{entry.entryAt.toString()}</Text>
+
             {entry.address && (
               <>
                 <Icon style={styles.addressIcon} name="person-pin" size={12} />
-                <Text style={styles.addressText}>
-                  {entry.address}
-                </Text>
+                <Text style={styles.addressText}>{entry.address}</Text>
               </>
             )}
           </View>
@@ -61,27 +60,24 @@ const EntryListItem = ({ entry, isFirstItem, isLastItem, onEntryPress }) => {
         <View style={styles.amount}>
           <Text style={styles.amountText}>{entry.amount}</Text>
         </View>
-
       </View>
-    </TouchableOpacity >
-  )
-}
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
   },
-  bullet: {
-
-  },
+  bullet: {},
   description: {
     flex: 1,
     justifyContent: 'center',
   },
   descriptionText: {
     fontSize: 14,
-    color: Colors.white
+    color: Colors.white,
   },
   details: {
     flexDirection: 'row',
@@ -93,17 +89,17 @@ const styles = StyleSheet.create({
   },
   entryAtText: {
     fontSize: 12,
-    color: Colors.metal
+    color: Colors.metal,
   },
   addressIcon: {
     color: Colors.metal,
     marginTop: 2,
     marginRight: 2,
-    marginLeft: 5
+    marginLeft: 5,
   },
   addressText: {
     fontSize: 12,
-    color: Colors.metal
+    color: Colors.metal,
   },
   amount: {
     justifyContent: 'center',
@@ -113,6 +109,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.white,
   },
-})
+});
 
-export default EntryListItem
+export default EntryListItem;

@@ -72,7 +72,7 @@ const Report = ({navigation}) => {
         <CategoryModal categoryType="all" isVisible={categoryModalVisible} onConfirm={onCategoryPress} onCancel={onCategoryClosePress}/>
       </View>
       <ScrollView>
-        <EntrySummary />
+        <EntrySummary days={relativeDays}/>
         <EntryList days={relativeDays} category={category}/>
       </ScrollView>
       
