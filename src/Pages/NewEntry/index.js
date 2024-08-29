@@ -33,7 +33,7 @@ const NewEntry = ({navigation}) => {
   const [category, setCategory] =  useState(entry.category);
   const [entryAt, setEntryAt] = useState(entry.entryAt);
   const [address, setAddress] = useState(entry.address);
-  const [latitude, setLatitude] = useState(entry.latitude);
+  const [latitude, setLatitude] = useState(entry.latitude); 
   const [longitude, setLongitude] = useState(entry.longitude);
 
   const isValid = () =>{
